@@ -1,11 +1,11 @@
 /******************************************************************************
  *
  * Project:  netCDF read/write Driver
- * Purpose:  Header file for userfaultfd support.
- * Author:   James McClain <james.mcclain@gmail.com>
+ * Purpose:  GDAL bindings over netCDF library.
+ * Author:   Winor Chen <wchen329 at wisc.edu>
  *
  ******************************************************************************
- * Copyright (c) 2018, Dr. James McClain <james.mcclain@gmail.com>
+ * Copyright (c) 2019, Winor Chen <wchen329 at wisc.edu>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -25,20 +25,19 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  ****************************************************************************/
+#ifndef __NETCDFLAYERSG_H__
+#define __NETCDFLAYERSG_H__
+#include "netcdfsg.h"
+#include "ogr_core.h"
 
-#ifdef ENABLE_UFFD
+namespace nccfdriver
+{
+OGRwkbGeometryType RawToOGR(geom_t type, int axis_count);
 
-#include "netcdf_mem.h"
-#include "cpl_userfaultfd.h"
+geom_t OGRtoRaw(OGRwkbGeometryType type);
 
-#ifndef NETCDF_UFFD_UNMAP
+bool OGRHasZandSupported(OGRwkbGeometryType type);
 
-#define NETCDF_UFFD_UNMAP(context)                                             \
-    {                                                                          \
-        CPLDeleteUserFaultMapping(context);                                    \
-        context = nullptr;                                                     \
-    }
-
-#endif  // NETCDF_UFFD_UNMAP
+}  // namespace nccfdriver
 
 #endif
