@@ -59,38 +59,4 @@ func registerGDALDrivers() {
 			haveGTiff = true
 		}
 	}
-
-	// De-register all the drivers again
-	for i := 0; i < int(C.GDALGetDriverCount()); i++ {
-		driver := C.GDALGetDriver(C.int(i))
-		switch C.GoString(C.GDALGetDriverShortName(driver)) {
-		case "GSKY_netCDF":
-			continue
-		default:
-			C.GDALDeregisterDriver(driver)
-		}
-
-	}
-
-	// Register these drivers first for higher performance when
-	// opening files (drivers are interrogated in a linear scan)
-	if haveGTiff {
-		C.GDALRegister_GTiff()
-	}
-
-	if !haveGSKYNetCDF && haveNetCDF {
-		C.GDALRegister_netCDF()
-	}
-
-	if haveHDF4 {
-		C.GDALRegister_HDF4()
-	}
-	if haveHDF5 {
-		C.GDALRegister_HDF5()
-	}
-	if haveJP2OpenJPEG {
-		C.GDALRegister_JP2OpenJPEG()
-	}
-	// Now register everything else
-	C.GDALAllRegister()
 }
