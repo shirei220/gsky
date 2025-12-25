@@ -23,6 +23,6 @@ mkdir -p $CRAWL_OUTPUT_DIR
 
 ./gsky/bin/gsky-crawl_pipeline.sh
 
-su -c "pg_ctl start" -l $PGUSER
+su -c "pg_ctl -D /pg_data start" -l $PGUSER
 (cd /gsky/share/mas && ./ingest_pipeline.sh u39 /crawl_outputs/_gdata_gdal.tsv.gz)
-su -c "pg_ctl stop" -l $PGUSER
+su -c "pg_ctl -D /pg_data stop" -l $PGUSER

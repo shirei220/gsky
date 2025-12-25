@@ -11,7 +11,7 @@ From: registry.opensuse.org/opensuse/leap:15.5
 
 %post
     PACKAGES='wget tar gzip gcc11 gcc11-c++ gcc14 gcc14-c++ cpp make'
-    PACKAGES+=' libprotobuf-c-devel sqlite3 sqlite3-devel'
+    PACKAGES+=' libprotobuf-c-devel sqlite3 sqlite3-devel bc'
     PACKAGES+=' zlib zlib-devel openssl openjpeg openjpeg-devel libjson-c-devel'
     PACKAGES+=' hdf hdf-devel hdf5 hdf5-devel libxml2 libxml2-devel git'
     PACKAGES+=' postgresql13-devel postgresql13-server-devel'

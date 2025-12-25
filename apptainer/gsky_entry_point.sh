@@ -17,7 +17,7 @@ mkdir -p /var/run/postgresql
 # re-injest???
 bash /ingest_sample_data.sh
 
-su -c "pg_ctl start" -l "$PGUSER"
+su -c "pg_ctl -D /pg_data start" -l "$PGUSER"
 
 # masapi requires postgresql unix domain socket under /var/run
 ln -s /tmp/.s.PGSQL.5432 /var/run/postgresql/.s.PGSQL.5432 
