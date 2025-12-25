@@ -1,0 +1,26 @@
+{
+  "service_config":{
+    "ows_hostname":"127.0.0.1:8080",
+    "mas_address":"127.0.0.1:8888",
+    "worker_nodes":["127.0.0.1:6000"]
+  },
+  "layers":
+  [
+    {
+      "name":"sentinel2:t55jgf:abam5",
+      "title":"Sentinel 2 t55jgf abam5",
+      "abstract":"To test out gsky.",
+      "data_source":"/gdata",
+      "time_generator":"mas",
+      "rgb_products":[
+        "bare_soil",
+        "phot_veg",
+        "nphot_veg"
+      ],
+      "clip_value":100
+    }
+  ],
+
+  "processes":[]
+
+}

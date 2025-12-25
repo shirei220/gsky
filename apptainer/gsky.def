@@ -1,0 +1,36 @@
+Bootstrap: docker
+From: registry.opensuse.org/opensuse/leap:15.5
+
+%files
+    build_postgis.sh /build_postgis.sh
+    build_gsky.sh /build_gsky.sh
+    setup_mas.sh /setup_mas.sh
+    gsky_config.json /gsky_config.json
+    ingest_sample_data.sh /ingest_sample_data.sh
+    gsky_entry_point.sh /gsky_entry_point.sh
+
+%post
+    PACKAGES='wget tar gzip gcc11 gcc11-c++ gcc14 gcc14-c++ cpp make'
+    PACKAGES+=' libprotobuf-c-devel sqlite3 sqlite3-devel'
+    PACKAGES+=' zlib zlib-devel openssl openjpeg openjpeg-devel libjson-c-devel'
+    PACKAGES+=' hdf hdf-devel hdf5 hdf5-devel libxml2 libxml2-devel git'
+    PACKAGES+=' postgresql13-devel postgresql13-server-devel'
+    PACKAGES+=' proj proj-devel geos geos-devel gdal gdal-devel netcdf netcdf-devel'
+
+    zypper -n install $PACKAGES
+
+    # add postgre utils to PATH
+    export PATH="$PATH:/usr/lib/postgresql13/bin"
+
+    chmod +x build_postgis.sh && ./build_postgis.sh
+    chmod +x build_gsky.sh && ./build_gsky.sh
+    chmod +x setup_mas.sh && ./setup_mas.sh
+    
+    # transfer config file to gsky dir
+    cp gsky_config.json /gsky/etc/config.json
+
+    # run injestion script (needs /gdata to be mounted)
+    chmod +x ingest_sample_data.sh && ./ingest_sample_data.sh
+
+%startscript
+    ./gsky_entry_point.sh
