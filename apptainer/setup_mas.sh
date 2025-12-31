@@ -14,7 +14,8 @@ su -c "initdb -A trust -U $PGUSER -D $PGDATA" -l $PGUSER
 su -c "pg_ctl -D /pg_data -l logfile start " -l $PGUSER
 
 # setup mas
-psql -f /gsky/share/mas/schema.sql
-psql -f /gsky/share/mas/mas.sql
+ls /gsky/share/mas
+(cd /gsky/share/mas && psql -f schema.sql)
+(cd /gsky/share/mas && psql -f mas.sql)
 
 su -c "pg_ctl -D /pg_data stop" -l $PGUSER
