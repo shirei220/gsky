@@ -7,7 +7,7 @@
   "layers":
   [
     {
-      "name":"sentinel2:t55jgf:abam5",
+      "name":"s2",
       "title":"Sentinel 2 t55jgf abam5",
       "abstract":"To test out gsky.",
       "data_source":"/gdata",

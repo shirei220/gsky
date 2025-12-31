@@ -27,10 +27,13 @@ From: registry.opensuse.org/opensuse/leap:15.5
     chmod +x setup_mas.sh && ./setup_mas.sh
     
     # transfer config file to gsky dir
-    cp gsky_config.json /gsky/etc/config.json
+    mkdir /gsky/etc/sdc
+    cp gsky_config.json /gsky/etc/sdc/config.json
 
     # run injestion script (needs /gdata to be mounted)
     chmod +x ingest_sample_data.sh && ./ingest_sample_data.sh
+
+    chmod +x gsky_entry_point.sh
 
 %startscript
     ./gsky_entry_point.sh
