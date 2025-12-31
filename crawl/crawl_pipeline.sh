@@ -26,7 +26,7 @@ then
 	fi
 
 	find_dir="$CRAWL_DIR"
-	file_pattern=${CRAWL_PATTERN:-*.nc}
+	file_pattern=${CRAWL_PATTERN:-*.img}
 	find_params=${CRAWL_PARAMS}
 
 	set -u
