@@ -10,13 +10,7 @@ masapi_port=8888
 rpc_port=6000
 ows_port=8080
 
-# re-injest???
-# bash /ingest_sample_data.sh
-
 su -c "pg_ctl -D /pg_data start" -l "$PGUSER"
-
-# masapi requires postgresql unix domain socket under /var/run
-ln -s /tmp/.s.PGSQL.5432 /var/run/postgresql/.s.PGSQL.5432 
 
 # start mas api server
 ./gsky/bin/masapi -port $masapi_port -pool 2 > masapi_output.log 2>&1 &
