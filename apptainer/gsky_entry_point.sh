@@ -10,12 +10,8 @@ masapi_port=8888
 rpc_port=6000
 ows_port=8080
 
-# restart postgresql
-rm -rf /var/run/postgresql
-mkdir -p /var/run/postgresql
-
 # re-injest???
-bash /ingest_sample_data.sh
+# bash /ingest_sample_data.sh
 
 su -c "pg_ctl -D /pg_data start" -l "$PGUSER"
 
@@ -47,7 +43,7 @@ set +x
 echo
 echo
 echo '=========================================================='
-echo 'Welcome to GSKY Docker'
+echo 'Welcome to GSKY Apptainer'
 echo
 echo "GSKY WMS/WCS end point:  http://127.0.0.1:$ows_port/ows"
 echo "MAS API end point:       http://127.0.0.1:$masapi_port"
