@@ -17,7 +17,7 @@ select true from ${shard}.paths limit 1;
 EOD
 ) && echo "Shard '${shard}' existed. Skipping shard creation." >&2 && exit 1
 
-(cd "$here" && psql -v ON_ERROR_STOP=1 -A -t -q -d mas <<EOD
+(cd "$here" && psql -v ON_ERROR_STOP=1 -A -t -d mas <<EOD
 
 set role mas;
 create schema if not exists ${shard};
