@@ -35,3 +35,5 @@ grant select,insert,update on ${shard}.ows_cache to api;
 
 EOD
 )
+
+echo 'INFO: shard_create.sh done.'

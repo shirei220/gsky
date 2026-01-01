@@ -19,3 +19,5 @@ grant select,insert,update on ${shard}_tmp.ows_cache to api;
 
 EOD
 )
+
+echo 'INFO: shard_reset.sh done.'
