@@ -37,3 +37,6 @@ From: registry.opensuse.org/opensuse/leap:15.5
 
 %startscript
     ./gsky_entry_point.sh
+
+%runscript
+    ./gsky_entry_point.sh

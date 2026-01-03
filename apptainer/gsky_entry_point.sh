@@ -45,3 +45,4 @@ echo
 echo '=========================================================='
 
 wait
+trap "trap - SIGTERM && kill -- -$$" SIGINT SIGTERM EXIT
