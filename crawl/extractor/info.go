@@ -461,6 +461,7 @@ func parseName(path string, config *Config) (*RuleSet, map[string]string, time.T
 			fname = path
 		}
 		if re.MatchString(fname) {
+			fmt.Println("matched: ", fname)
 			match := re.FindStringSubmatch(fname)
 
 			result := make(map[string]string)
@@ -471,9 +472,11 @@ func parseName(path string, config *Config) (*RuleSet, map[string]string, time.T
 			}
 			newRuleSet := RuleSet{}
 			copyRuleSet(&newRuleSet, &ruleSet)
+			fmt.Println("result: ", result)
 			return &newRuleSet, result, parseTime(result)
 		}
 	}
+	fmt.Println("no rulesets matched")
 	return nil, nil, time.Time{}
 }
 
