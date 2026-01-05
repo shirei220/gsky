@@ -70,6 +70,14 @@ const (
 
 var CollectionRuleSets = []RuleSet{
 	RuleSet{
+		Collection: "sentinel2_sdc",
+		NameSpace:  NSPath,
+		SRSText:    SRSDetect,
+		Proj4Text:  Proj4Detect,
+		Pattern:    `^(?P<something>[a-z]+)_(?P<tile>[a-z0-9]+)_(?P<year>\d\d\d\d)(?P<month>\d\d)(?P<day>\d\d)_(?P<stagecode>[a-z0-9]+).img`,
+		TimeAxis:   &DatasetAxis{},
+	},
+	RuleSet{
 		Collection: "landsat",
 		NameSpace:  NSDataset,
 		SRSText:    SRSDetect,
@@ -131,14 +139,6 @@ var CollectionRuleSets = []RuleSet{
 		SRSText:    SRSDetect,
 		Proj4Text:  Proj4Detect,
 		Pattern:    `^T(?P<zone>\d\d)(?P<sensor>[A-Z]+)_(?P<year>\d\d\d\d)(?P<month>\d\d)(?P<day>\d\d)T(?P<hour>\d\d)(?P<minute>\d\d)(?P<second>\d\d)_(?P<namespace>B\d\d).jp2$`,
-		TimeAxis:   &DatasetAxis{},
-	},
-	RuleSet{
-		Collection: "sentinel2_sdc",
-		NameSpace:  NSPath,
-		SRSText:    SRSDetect,
-		Proj4Text:  Proj4Detect,
-		Pattern:    `^(?P<something>[A-Z]+)_(?P<tile>[A-Z0-9]+)_(?P<year>\d\d\d\d)(?P<month>\d\d)(?P<day>\d\d)_(?P<stagecode>[A-Z0-9]+).img`,
 		TimeAxis:   &DatasetAxis{},
 	},
 	RuleSet{
