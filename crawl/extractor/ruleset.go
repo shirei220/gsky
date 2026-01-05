@@ -134,6 +134,14 @@ var CollectionRuleSets = []RuleSet{
 		TimeAxis:   &DatasetAxis{},
 	},
 	RuleSet{
+		Collection: "sentinel2_sdc",
+		NameSpace:  NSPath,
+		SRSText:    SRSDetect,
+		Proj4Text:  Proj4Detect,
+		Pattern:    `^(?P<something>[A-Z]+)_(?P<tile>[A-Z0-9]+)_(?P<year>\d\d\d\d)(?P<month>\d\d)(?P<day>\d\d)_(?P<stagecode>[A-Z0-9]+).img`,
+		TimeAxis:   &DatasetAxis{},
+	},
+	RuleSet{
 		Collection: "modisJP_LR",
 		NameSpace:  NSDataset,
 		SRSText:    SRSDetect,
