@@ -194,6 +194,10 @@ func getDataSetInfo(filename string, dsName *C.char, driverName string, approx b
 
 	ruleSet, nameFields, timeStamp := parseName(filename, config)
 
+	if ruleSet == nil {
+		return &GeoMetaData{}, fmt.Errorf("No ruleset matched")
+	}
+
 	var ncTimes []string
 	var err error
 	var times []time.Time
