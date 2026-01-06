@@ -7,6 +7,7 @@ import (
 	"image/color"
 	"image/jpeg"
 	"io"
+	"log"
 	"os"
 	"time"
 
