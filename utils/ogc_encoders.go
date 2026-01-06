@@ -12,6 +12,7 @@ import (
 	"image"
 	"image/png"
 	"io/ioutil"
+	"log"
 	"os"
 	"strconv"
 	"strings"
