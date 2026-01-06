@@ -28,6 +28,7 @@ func NewJPGEncoder(errChan chan error) *JPGEncoder {
 }
 
 func (enc *JPGEncoder) Run() {
+	defer log.Printf("tile jpg encoder done")
 	start := time.Now()
 
 	bands := map[string]*ByteRaster{}
