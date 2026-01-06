@@ -15,6 +15,7 @@ func NewRasterScaler(errChan chan error) *RasterScaler {
 }
 
 func (scl *RasterScaler) Run() {
+	defer log.Printf("tile scaler done")
 	defer close(scl.Out)
 
 	for raster := range scl.In {

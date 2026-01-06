@@ -29,6 +29,7 @@ func NewPNGEncoder(errChan chan error) *PNGEncoder {
 }
 
 func (enc *PNGEncoder) Run() {
+	defer log.Printf("tile png encoder done")
 	defer close(enc.Out)
 
 	bands := map[string][]*ByteRaster{}
@@ -61,6 +62,7 @@ func (enc *PNGEncoder) Run() {
 
 	switch len(nameSpaces) {
 	case 1:
+		log.Printf("tile png case 1")
 		buf := new(bytes.Buffer)
 		if nameSpaces[0] == "OutOfZoom" {
 			f, err := os.Open(utils.DataDir + "/zoom.png")
@@ -93,6 +95,7 @@ func (enc *PNGEncoder) Run() {
 		enc.Out <- buf.Bytes()
 
 	case 3:
+		log.Printf("tile png case 3")
 		dst := image.NewRGBA(image.Rect(0, 0, canvasX, canvasY))
 
 		if len(bands[nameSpaces[0]]) != len(bands[nameSpaces[1]]) || len(bands[nameSpaces[0]]) != len(bands[nameSpaces[2]]) {
@@ -133,6 +136,7 @@ func (enc *PNGEncoder) Run() {
 		}
 		enc.Out <- buf.Bytes()
 	default:
+		log.Printf("tile png default")
 		log.Printf("Cannot encode other than 1 or 3 namespaces into a PNG. Received %d namespaces: %v\n", len(nameSpaces), nameSpaces)
 		buf := new(bytes.Buffer)
 		f, err := os.Open(utils.DataDir + "/data_unavailable.png")
