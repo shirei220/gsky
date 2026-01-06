@@ -80,11 +80,13 @@ func (r *Float32Raster) GetNoData() float64 {
 const EmptyTileNS = "EmptyTile"
 
 func EncodePNG(br []*ByteRaster, palette *Palette) ([]byte, error) {
+	defer log.Printf("tile png encoder done")
 	buf := new(bytes.Buffer)
 	canvas := image.NewRGBA(image.Rect(0, 0, br[0].Width, br[0].Height))
 
 	switch len(br) {
 	case 1:
+		log.Printf("tile png encoder case 1")
 		if palette != nil {
 			plt, err := GradientRGBAPalette(palette)
 			if err != nil {
@@ -99,6 +101,7 @@ func EncodePNG(br []*ByteRaster, palette *Palette) ([]byte, error) {
 				}
 			}
 		} else {
+			log.Printf("palette nil")
 			var start int
 			for i := 0; i < br[0].Width*br[0].Height; i++ {
 				val := br[0].Data[i]
@@ -113,6 +116,7 @@ func EncodePNG(br []*ByteRaster, palette *Palette) ([]byte, error) {
 		}
 
 	case 3:
+		log.Printf("tile png encoder case 3")
 		rasterR := br[0]
 		rasterG := br[1]
 		rasterB := br[2]
@@ -133,6 +137,7 @@ func EncodePNG(br []*ByteRaster, palette *Palette) ([]byte, error) {
 		}
 
 	default:
+		log.Printf("tile png encoder default")
 		return []byte{}, fmt.Errorf("Cannot encode other than 1 or 3 namespaces into a PNG: Received %d", len(br))
 	}
 

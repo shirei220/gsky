@@ -49,6 +49,7 @@ func InitTilePipeline(ctx context.Context, masAddr string, rpcAddr []string, max
 }
 
 func (dp *TilePipeline) Process(geoReq *GeoTileRequest, verbose bool) chan []utils.Raster {
+	defer log.Printf("tile pipeline process done")
 	masAddress := dp.MASAddress
 	if geoReq.Overview != nil {
 		dataSource := geoReq.Collection
