@@ -1,6 +1,11 @@
 #!/bin/bash
 set -xeu
 
+function cleanup() {
+  readarray -t child_pids < <(pgrep -P $$)
+  declare -p child_pids
+}
+
 export LD_LIBRARY_PATH="/usr/local/lib:${LD_LIBRARY_PATH:-}"
 
 export PGUSER=${PGUSER:-postgres}
@@ -45,4 +50,4 @@ echo
 echo '=========================================================='
 
 wait
-trap "trap - SIGTERM && kill -- -$$" SIGINT SIGTERM EXIT
+trap cleanup SIGINT
