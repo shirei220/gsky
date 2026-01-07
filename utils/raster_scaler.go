@@ -188,7 +188,7 @@ func scale(r Raster, params ScaleParams) (*ByteRaster, error) {
 			clip = int16(maxVal + dfOffset)
 		}
 
-		log.Printf("t: %+v", t)
+		//data still here log.Printf("t: %+v", t)
 
 		for i, value := range t.Data {
 			if value == noData {
@@ -204,6 +204,7 @@ func scale(r Raster, params ScaleParams) (*ByteRaster, error) {
 				out.Data[i] = uint8(float32(value) * scale)
 			}
 		}
+		log.Printf("out: %+v", out)
 		return out, nil
 
 	case *UInt16Raster:
