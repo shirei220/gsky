@@ -623,8 +623,12 @@ func (enc *RasterMerger) Run(bandExpr *utils.BandExpressions, verbose bool) {
 			headr.Cap /= SizeofInt16
 			data := *(*[]int16)(unsafe.Pointer(&headr))
 			if !hasExpr {
+				log.Printf("!hasExpr branch")
 				out[i] = &utils.Int16Raster{NoData: canvas.NoData, Data: data,
 					Width: canvas.Width, Height: canvas.Height, NameSpace: ns}
+				log.Printf("out: %s", out)
+				log.Printf("i: %s", i)
+				log.Printf("out[i]: %s", out[i])
 			} else {
 				varData := make([]float32, len(data))
 				for i, val := range data {
