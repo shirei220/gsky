@@ -97,6 +97,7 @@ func (dp *TilePipeline) Process(geoReq *GeoTileRequest, verbose bool) chan []uti
 		}
 
 		if hasFusedBand {
+			log.Printf("has fused band")
 			var aggTime time.Duration
 			if geoReq.StartTime != nil && geoReq.EndTime != nil {
 				aggTime = geoReq.EndTime.Sub(*geoReq.StartTime)
@@ -169,6 +170,9 @@ func (dp *TilePipeline) Process(geoReq *GeoTileRequest, verbose bool) chan []uti
 
 	go i.Run(verbose)
 	go grpcTiler.Run(varList, verbose)
+
+	log.Printf("m.Out: %+v", m.Out)
+	log.Printf("m.Out: %v", m.Out)
 
 	return m.Out
 }

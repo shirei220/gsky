@@ -626,9 +626,14 @@ func (enc *RasterMerger) Run(bandExpr *utils.BandExpressions, verbose bool) {
 				log.Printf("!hasExpr branch")
 				out[i] = &utils.Int16Raster{NoData: canvas.NoData, Data: data,
 					Width: canvas.Width, Height: canvas.Height, NameSpace: ns}
-				log.Printf("out: %v", out)
+				log.Printf("out: %+v", out)
 				log.Printf("i: %v", i)
-				log.Printf("out[i]: %v", out[i])
+				// print first 5 to avoid clogging terminal
+				log.Printf("%v", out[i].Data[0])
+				log.Printf("%v", out[i].Data[1])
+				log.Printf("%v", out[i].Data[2])
+				log.Printf("%v", out[i].Data[3])
+				log.Printf("%v", out[i].Data[4])
 			} else {
 				varData := make([]float32, len(data))
 				for i, val := range data {
@@ -738,10 +743,14 @@ func (enc *RasterMerger) Run(bandExpr *utils.BandExpressions, verbose bool) {
 	}
 
 	if enc.checkCancellation() {
+		log.Printf("enc.checkCancellation")
 		return
 	}
 
 	enc.Out <- out
+
+	log.Printf("enc.Out: %+v", m.Out)
+	log.Printf("enc.Out: %v", m.Out)
 }
 
 func (enc *RasterMerger) sendError(err error) {
