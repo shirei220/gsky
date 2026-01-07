@@ -1,11 +1,6 @@
 #!/bin/bash
 set -xeu
 
-function cleanup() {
-  readarray -t child_pids < <(pgrep -P $$)
-  declare -p child_pids
-}
-
 export LD_LIBRARY_PATH="/usr/local/lib:${LD_LIBRARY_PATH:-}"
 
 export PGUSER=${PGUSER:-postgres}
@@ -49,5 +44,5 @@ echo "MAS API end point:       http://127.0.0.1:$masapi_port"
 echo
 echo '=========================================================='
 
+trap "trap - SIGTERM && kill -- -$$" SIGINT
 wait
-trap cleanup SIGINT
