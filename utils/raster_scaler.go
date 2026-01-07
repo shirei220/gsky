@@ -149,14 +149,12 @@ func scale(r Raster, params ScaleParams) (*ByteRaster, error) {
 		return &ByteRaster{t.NameSpace, t.Data, t.Height, t.Width, t.NoData}, nil
 
 	case *Int16Raster:
-		log.Printf("raster scaler: case int16")
 		out := &ByteRaster{NameSpace: t.NameSpace, NoData: t.NoData, Data: make([]uint8, t.Height*t.Width), Width: t.Width, Height: t.Height}
 		noData := int16(t.NoData)
 		offset := int16(params.Offset)
 		clip := int16(params.Clip)
 
 		if params.Scale == 0.0 && params.Clip == 0.0 && params.Offset == 0.0 {
-			log.Printf("raster scaler: params scale/clip/offset == 0.0")
 			var minVal, maxVal float32
 			for i, value := range t.Data {
 				if value == noData {
@@ -189,16 +187,9 @@ func scale(r Raster, params ScaleParams) (*ByteRaster, error) {
 			clip = int16(maxVal + dfOffset)
 		}
 
-		log.Printf("offset: %v", offset)
-		log.Printf("clip: %v", clip)
-		log.Printf("scale %v", scale)
-
-		var ndCount = 0
-
 		for i, value := range t.Data {
 			if value == noData {
 				out.Data[i] = 0xFF
-				ndCount++
 			} else {
 				value += offset
 				if value > clip {
@@ -210,9 +201,6 @@ func scale(r Raster, params ScaleParams) (*ByteRaster, error) {
 				out.Data[i] = uint8(float32(value) * scale)
 			}
 		}
-		//log.Printf("out: %+v", out) //returns an array where every value is 254
-		log.Printf("ndCount: %v", ndCount)
-		log.Printf("data length: %v", len(out.Data))
 		return out, nil
 
 	case *UInt16Raster:

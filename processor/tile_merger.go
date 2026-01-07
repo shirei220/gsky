@@ -618,16 +618,12 @@ func (enc *RasterMerger) Run(bandExpr *utils.BandExpressions, verbose bool) {
 			}
 
 		case "Int16":
-			log.Printf("reached for i, ns := range nameSpaces Int16")
 			headr.Len /= SizeofInt16
 			headr.Cap /= SizeofInt16
 			data := *(*[]int16)(unsafe.Pointer(&headr))
 			if !hasExpr {
-				log.Printf("!hasExpr branch")
 				out[i] = &utils.Int16Raster{NoData: canvas.NoData, Data: data,
 					Width: canvas.Width, Height: canvas.Height, NameSpace: ns}
-				log.Printf("i: %v", i)
-				//log.Printf("out[i]: %+v", out[i])
 			} else {
 				varData := make([]float32, len(data))
 				for i, val := range data {
@@ -681,7 +677,6 @@ func (enc *RasterMerger) Run(bandExpr *utils.BandExpressions, verbose bool) {
 							noDataMasks[j] = false
 						}
 					}
-					//log.Printf("   %v: %v, %v", axisNs, v.Name, v.Idx)
 				}
 
 				result, err := bandExpr.Expressions[iv].Evaluate(parameters)
@@ -694,7 +689,6 @@ func (enc *RasterMerger) Run(bandExpr *utils.BandExpressions, verbose bool) {
 				if axisNs != "singular" {
 					outNameSpace += "#" + axisNs
 				}
-				//log.Printf(" %v, %v, %v, uuuu %v", iv, iOut, len(out), outNameSpace)
 
 				outRaster := &utils.Float32Raster{NoData: noData, Data: make([]float32, len(noDataMasks)),
 					Width: width, Height: height, NameSpace: outNameSpace}
@@ -742,8 +736,6 @@ func (enc *RasterMerger) Run(bandExpr *utils.BandExpressions, verbose bool) {
 	}
 
 	enc.Out <- out
-
-	log.Printf("enc.Out: %+v", enc.Out)
 }
 
 func (enc *RasterMerger) sendError(err error) {

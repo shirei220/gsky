@@ -553,7 +553,6 @@ func serveWMS(ctx context.Context, params utils.WMSParams, conf *utils.Config, r
 
 		select {
 		case res := <-tp.Process(geoReq, *verbose):
-			log.Printf("res: %v", res)
 			scaleParams := utils.ScaleParams{Offset: geoReq.ScaleParams.Offset,
 				Scale:       geoReq.ScaleParams.Scale,
 				Clip:        geoReq.ScaleParams.Clip,

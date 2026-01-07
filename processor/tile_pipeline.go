@@ -49,7 +49,6 @@ func InitTilePipeline(ctx context.Context, masAddr string, rpcAddr []string, max
 }
 
 func (dp *TilePipeline) Process(geoReq *GeoTileRequest, verbose bool) chan []utils.Raster {
-	defer log.Printf("tile pipeline process done")
 	masAddress := dp.MASAddress
 	if geoReq.Overview != nil {
 		dataSource := geoReq.Collection
@@ -97,7 +96,6 @@ func (dp *TilePipeline) Process(geoReq *GeoTileRequest, verbose bool) chan []uti
 		}
 
 		if hasFusedBand {
-			log.Printf("has fused band")
 			var aggTime time.Duration
 			if geoReq.StartTime != nil && geoReq.EndTime != nil {
 				aggTime = geoReq.EndTime.Sub(*geoReq.StartTime)
@@ -162,7 +160,6 @@ func (dp *TilePipeline) Process(geoReq *GeoTileRequest, verbose bool) chan []uti
 			varList = otherVars
 		}
 	}
-	log.Printf("reached past fusedBand code")
 
 	go func() {
 		i.In <- geoReq
@@ -172,8 +169,6 @@ func (dp *TilePipeline) Process(geoReq *GeoTileRequest, verbose bool) chan []uti
 	go i.Run(verbose)
 	go grpcTiler.Run(varList, verbose)
 	
-	log.Printf("m.Out: %v", m.Out)
-
 	return m.Out
 }
 
