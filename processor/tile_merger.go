@@ -628,12 +628,7 @@ func (enc *RasterMerger) Run(bandExpr *utils.BandExpressions, verbose bool) {
 					Width: canvas.Width, Height: canvas.Height, NameSpace: ns}
 				log.Printf("out: %+v", out)
 				log.Printf("i: %v", i)
-				// print first 5 to avoid clogging terminal
-				log.Printf("%v", out[i].Data[0])
-				log.Printf("%v", out[i].Data[1])
-				log.Printf("%v", out[i].Data[2])
-				log.Printf("%v", out[i].Data[3])
-				log.Printf("%v", out[i].Data[4])
+				log.Printf("out[i]: %+v", out[i])
 			} else {
 				varData := make([]float32, len(data))
 				for i, val := range data {
