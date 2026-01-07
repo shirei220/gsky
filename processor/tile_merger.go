@@ -279,6 +279,7 @@ func initNoDataSlice(rType string, noDataValue float64, size int) []uint8 {
 }
 
 func ProcessRasterStack(rasterStack map[float64][]*FlexRaster, maskMap map[float64][]bool, canvasMap map[string]*FlexRaster) (map[string]*FlexRaster, error) {
+	defer log.Printf("tile merger: process raster stack done")
 	var keys []float64
 	for k := range rasterStack {
 		keys = append(keys, k)
@@ -516,6 +517,7 @@ func (enc *RasterMerger) Run(bandExpr *utils.BandExpressions, verbose bool) {
 	}
 
 	if len(nameSpaces) == 0 {
+		log.Printf("len(nameSpaces == 0)")
 		enc.Out <- []utils.Raster{&utils.ByteRaster{Data: make([]uint8, 0), NameSpace: utils.EmptyTileNS, Height: 0, Width: 0}}
 		return
 	}
@@ -616,6 +618,7 @@ func (enc *RasterMerger) Run(bandExpr *utils.BandExpressions, verbose bool) {
 			}
 
 		case "Int16":
+			log.Printf("reached for i, ns := range nameSpaces Int16")
 			headr.Len /= SizeofInt16
 			headr.Cap /= SizeofInt16
 			data := *(*[]int16)(unsafe.Pointer(&headr))
