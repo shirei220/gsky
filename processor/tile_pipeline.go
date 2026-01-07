@@ -162,7 +162,6 @@ func (dp *TilePipeline) Process(geoReq *GeoTileRequest, verbose bool) chan []uti
 			varList = otherVars
 		}
 	}
-	log.Printf("reached past fusedBand code")
 
 	go func() {
 		i.In <- geoReq
