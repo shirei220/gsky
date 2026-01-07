@@ -11,7 +11,8 @@
       "title":"Sentinel 2 t55jgf abam5",
       "abstract":"To test out gsky.",
       "data_source":"/gdata",
-      "time_generator":"mas"
+      "time_generator":"mas",
+      "rgb_products": ["Band 1", "Band 2", "Band 3"]
     }
   ],
 
