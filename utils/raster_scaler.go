@@ -3,6 +3,7 @@ package utils
 import (
 	"fmt"
 	"math"
+	"log"
 )
 
 type ScaleParams struct {
@@ -148,6 +149,7 @@ func scale(r Raster, params ScaleParams) (*ByteRaster, error) {
 		return &ByteRaster{t.NameSpace, t.Data, t.Height, t.Width, t.NoData}, nil
 
 	case *Int16Raster:
+		log.Printf("raster scaler: case int16")
 		out := &ByteRaster{NameSpace: t.NameSpace, NoData: t.NoData, Data: make([]uint8, t.Height*t.Width), Width: t.Width, Height: t.Height}
 		noData := int16(t.NoData)
 		offset := int16(params.Offset)
@@ -185,6 +187,8 @@ func scale(r Raster, params ScaleParams) (*ByteRaster, error) {
 			offset = int16(dfOffset)
 			clip = int16(maxVal + dfOffset)
 		}
+
+		log.Printf("t: %+v", t)
 
 		for i, value := range t.Data {
 			if value == noData {
