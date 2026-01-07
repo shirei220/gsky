@@ -12,12 +12,7 @@
       "abstract":"To test out gsky.",
       "data_source":"/gdata",
       "time_generator":"mas",
-      "rgb_products":[
-        "bare_soil",
-        "phot_veg",
-        "nphot_veg"
-      ],
-      "clip_value":100
+      "clip_value":254
     }
   ],
 
