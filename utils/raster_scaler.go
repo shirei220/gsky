@@ -193,7 +193,7 @@ func scale(r Raster, params ScaleParams) (*ByteRaster, error) {
 		log.Printf("clip: %v", clip)
 		log.Printf("scale %v", scale)
 
-		var ndCount := 0
+		var ndCount = 0
 
 		for i, value := range t.Data {
 			if value == noData {
