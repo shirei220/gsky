@@ -3,7 +3,6 @@ package utils
 import (
 	"fmt"
 	"math"
-	"log"
 )
 
 type ScaleParams struct {
