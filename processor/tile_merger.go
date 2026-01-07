@@ -8,7 +8,6 @@ import (
 	"math"
 	"reflect"
 	"sort"
-	"sync"
 	"strconv"
 	"strings"
 	"unsafe"
@@ -446,8 +445,7 @@ func ComputeMask(mask *utils.Mask, data []byte, rType string) (out []bool, err e
 	return
 }
 
-func (enc *RasterMerger) Run(bandExpr *utils.BandExpressions, verbose bool, wg *sync.WaitGroup) {
-	defer wg.Done()
+func (enc *RasterMerger) Run(bandExpr *utils.BandExpressions, verbose bool) {
 	if verbose {
 		defer log.Printf("tile merger done")
 	}
@@ -745,7 +743,7 @@ func (enc *RasterMerger) Run(bandExpr *utils.BandExpressions, verbose bool, wg *
 
 	enc.Out <- out
 
-	log.Printf("enc.Out[0]: %+v", enc.Out[0])
+	log.Printf("enc.Out: %+v", enc.Out)
 }
 
 func (enc *RasterMerger) sendError(err error) {

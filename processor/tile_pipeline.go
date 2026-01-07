@@ -9,7 +9,6 @@ import (
 	"strings"
 	"time"
 	"unsafe"
-	"sync"
 
 	"github.com/nci/gsky/utils"
 )
@@ -79,9 +78,6 @@ func (dp *TilePipeline) Process(geoReq *GeoTileRequest, verbose bool) chan []uti
 		}
 	}
 
-	var wg sync.WaitGroup
-	wg.Add(1)
-
 	i := NewTileIndexer(dp.Context, masAddress, dp.Error)
 	m := NewRasterMerger(dp.Context, dp.Error)
 	grpcTiler := NewRasterGRPC(dp.Context, dp.RPCAddress, dp.MaxGrpcRecvMsgSize, dp.PolygonShardConcLimit, dp.MaxGrpcBufferSize, dp.Error)
@@ -89,7 +85,7 @@ func (dp *TilePipeline) Process(geoReq *GeoTileRequest, verbose bool) chan []uti
 	grpcTiler.In = i.Out
 	m.In = grpcTiler.Out
 
-	go m.Run(geoReq.BandExpr, verbose, &wg)
+	go m.Run(geoReq.BandExpr, verbose)
 
 	varList := geoReq.BandExpr.VarList
 	if dp.CurrentLayer != nil && len(dp.CurrentLayer.InputLayers) > 0 {
