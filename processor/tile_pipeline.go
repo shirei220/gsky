@@ -172,7 +172,6 @@ func (dp *TilePipeline) Process(geoReq *GeoTileRequest, verbose bool) chan []uti
 	go i.Run(verbose)
 	go grpcTiler.Run(varList, verbose)
 	
-	wg.Wait()
 	log.Printf("m.Out: %v", m.Out)
 
 	return m.Out
