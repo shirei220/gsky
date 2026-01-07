@@ -9,6 +9,7 @@ import (
 	"strings"
 	"time"
 	"unsafe"
+	"sync"
 
 	"github.com/nci/gsky/utils"
 )
@@ -78,6 +79,9 @@ func (dp *TilePipeline) Process(geoReq *GeoTileRequest, verbose bool) chan []uti
 		}
 	}
 
+	var wg sync.WaitGroup
+	wg.Add(1)
+
 	i := NewTileIndexer(dp.Context, masAddress, dp.Error)
 	m := NewRasterMerger(dp.Context, dp.Error)
 	grpcTiler := NewRasterGRPC(dp.Context, dp.RPCAddress, dp.MaxGrpcRecvMsgSize, dp.PolygonShardConcLimit, dp.MaxGrpcBufferSize, dp.Error)
@@ -85,7 +89,7 @@ func (dp *TilePipeline) Process(geoReq *GeoTileRequest, verbose bool) chan []uti
 	grpcTiler.In = i.Out
 	m.In = grpcTiler.Out
 
-	go m.Run(geoReq.BandExpr, verbose)
+	go m.Run(geoReq.BandExpr, verbose, &wg)
 
 	varList := geoReq.BandExpr.VarList
 	if dp.CurrentLayer != nil && len(dp.CurrentLayer.InputLayers) > 0 {
@@ -162,16 +166,17 @@ func (dp *TilePipeline) Process(geoReq *GeoTileRequest, verbose bool) chan []uti
 			varList = otherVars
 		}
 	}
+	log.Printf("reached past fusedBand code")
 
 	go func() {
 		i.In <- geoReq
 		close(i.In)
 	}()
-
+	
 	go i.Run(verbose)
 	go grpcTiler.Run(varList, verbose)
-
-	log.Printf("m.Out: %+v", m.Out)
+	
+	wg.Wait()
 	log.Printf("m.Out: %v", m.Out)
 
 	return m.Out

@@ -445,7 +445,8 @@ func ComputeMask(mask *utils.Mask, data []byte, rType string) (out []bool, err e
 	return
 }
 
-func (enc *RasterMerger) Run(bandExpr *utils.BandExpressions, verbose bool) {
+func (enc *RasterMerger) Run(bandExpr *utils.BandExpressions, verbose bool, wg *sync.WaitGroup) {
+	defer wg.Done()
 	if verbose {
 		defer log.Printf("tile merger done")
 	}
@@ -626,9 +627,8 @@ func (enc *RasterMerger) Run(bandExpr *utils.BandExpressions, verbose bool) {
 				log.Printf("!hasExpr branch")
 				out[i] = &utils.Int16Raster{NoData: canvas.NoData, Data: data,
 					Width: canvas.Width, Height: canvas.Height, NameSpace: ns}
-				log.Printf("out: %+v", out)
 				log.Printf("i: %v", i)
-				log.Printf("out[i]: %+v", out[i])
+				//log.Printf("out[i]: %+v", out[i])
 			} else {
 				varData := make([]float32, len(data))
 				for i, val := range data {
@@ -744,8 +744,7 @@ func (enc *RasterMerger) Run(bandExpr *utils.BandExpressions, verbose bool) {
 
 	enc.Out <- out
 
-	log.Printf("enc.Out: %+v", enc.Out)
-	log.Printf("enc.Out: %v", enc.Out)
+	log.Printf("enc.Out[0]: %+v", enc.Out[0])
 }
 
 func (enc *RasterMerger) sendError(err error) {
