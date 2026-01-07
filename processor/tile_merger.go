@@ -741,7 +741,7 @@ func (enc *RasterMerger) Run(bandExpr *utils.BandExpressions, verbose bool) {
 		return
 	}
 
-	enc.Out <- out[0]
+	enc.Out <- out
 
 	log.Printf("enc.Out: %+v", enc.Out)
 }
