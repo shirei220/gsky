@@ -154,6 +154,7 @@ func (p *TileIndexer) Run(verbose bool) {
 			}
 
 			if len(geoReq.NameSpaces) == 0 {
+				log.Printf("tile indexer: empty namespace appended")
 				geoReq.NameSpaces = append(geoReq.NameSpaces, "")
 			}
 
