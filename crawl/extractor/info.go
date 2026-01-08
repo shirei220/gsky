@@ -109,8 +109,8 @@ func ExtractGDALInfo(path string, concLimit int, approx bool, config *Config) (*
 		}
 		//datasets = append(datasets, dsInfo)
 
-		if len(dsInfo.RasterCount) > 1 {
-			for i:= 1; i <= dsInfo.RasterCount; i++ {
+		if dsInfo.RasterCount > 1 {
+			for i:= 1; i <= int(dsInfo.RasterCount); i++ {
 				bandInfo, err := getDataSetInfo(path, cPath, shortName, approx, config)
 				if err != nil {
 					LogErr.Printf("%v", err)
@@ -120,7 +120,7 @@ func ExtractGDALInfo(path string, concLimit int, approx bool, config *Config) (*
 				bandInfo.RasterCount = 1
 				bandInfo.NameSpace = fmt.Sprintf("band_%v", i)
 
-				datasets.append(datasets, bandInfo)
+				datasets = append(datasets, bandInfo)
 			}
 		}
 		
