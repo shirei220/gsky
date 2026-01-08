@@ -13,6 +13,7 @@ import (
 	"strings"
 	"sync"
 	"time"
+	"strings"
 
 	"github.com/nci/gsky/utils"
 )
@@ -527,6 +528,10 @@ func (p *TileIndexer) URLIndexGet(ctx context.Context, url string, geoReq *GeoTi
 				// need to find out which namespace
 				// if namespace == "band_x"
 				// then bandIdx == "x" ?
+				if strings.HasPrefix(namespace, "band_") {
+					after, _ := strings.CutPrefix(namespace, "band_")
+					bandIdx := int(after)
+				}
 
 				if !isEmptyTile || (isEmptyTile && !bandFound) {
 					gran := &GeoTileGranule{ConfigPayLoad: geoReq.ConfigPayLoad, RawPath: ds.RawPath, Path: ds.DSName, NameSpace: namespace, VarNameSpace: ds.NameSpace, RasterType: ds.ArrayType, TimeStamp: float64(aggTimeStamp), BandIdx: bandIdx, Polygon: ds.Polygon, BBox: geoReq.BBox, Height: geoReq.Height, Width: geoReq.Width, CRS: geoReq.CRS, SrcSRS: ds.SRS, SrcGeoTransform: ds.GeoTransform, GeoLocation: ds.GeoLocation}
