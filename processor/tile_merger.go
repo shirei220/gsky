@@ -451,7 +451,6 @@ func (enc *RasterMerger) Run(bandExpr *utils.BandExpressions, verbose bool) {
 	defer close(enc.Out)
 
 	canvasMap := map[string]*FlexRaster{}
-	log.Printf("enc.In: %+v", enc.In)
 	for inRasters := range enc.In {
 		select {
 		case <-enc.Context.Done():
