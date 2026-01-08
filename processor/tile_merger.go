@@ -510,13 +510,14 @@ func (enc *RasterMerger) Run(bandExpr *utils.BandExpressions, verbose bool) {
 		return
 	}
 
-	log.Printf("canvas.ConfigPayLoad.NameSpaces: %+v", canvas.ConfigPayLoad.NameSpaces)
+	log.Printf("canvasMap: %+v", canvasMap)
 
 	var nameSpaces []string
 	if _, found := canvasMap[utils.EmptyTileNS]; found {
 		nameSpaces = append(nameSpaces, utils.EmptyTileNS)
 	} else {
 		for _, canvas := range canvasMap {
+			log.Printf("configpayload.namespaces: %+v", canvas.ConfigPayLoad.NameSpaces)
 			nameSpaces = canvas.ConfigPayLoad.NameSpaces
 			break
 		}
