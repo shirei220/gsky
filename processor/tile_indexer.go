@@ -529,7 +529,10 @@ func (p *TileIndexer) URLIndexGet(ctx context.Context, url string, geoReq *GeoTi
 				// if namespace == "band_x"
 				// then bandIdx == "x" ?
 				if strings.HasPrefix(namespace, "band_") {
-					bandIdx := strconv.Atoi(strings.TrimPrefix(namespace, "band_"))
+					num, err := strconv.Atoi(strings.TrimPrefix(namespace, "band_"))
+					if err == nil {
+						bandIdx := num
+					}
 				}
 
 				if !isEmptyTile || (isEmptyTile && !bandFound) {
