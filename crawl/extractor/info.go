@@ -108,10 +108,10 @@ func ExtractGDALInfo(path string, concLimit int, approx bool, config *Config) (*
 			return &GeoFile{}, fmt.Errorf("%v", err)
 		}
 		//datasets = append(datasets, dsInfo)
-		
+
 		if len(dsInfo.RasterCount) > 1 {
 			for i:= 1; i <= dsInfo.RasterCount; i++ {
-				bandInfo := dsInfo
+				var bandInfo := dsInfo
 				bandInfo.RasterCount := 1
 				bandInfo.NameSpace := fmt.Sprintf("band_%v", i)
 
