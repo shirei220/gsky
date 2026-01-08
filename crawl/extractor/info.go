@@ -107,13 +107,18 @@ func ExtractGDALInfo(path string, concLimit int, approx bool, config *Config) (*
 			LogErr.Printf("%v", err)
 			return &GeoFile{}, fmt.Errorf("%v", err)
 		}
+		//datasets = append(datasets, dsInfo)
+		
+		if len(dsInfo.RasterCount) > 1 {
+			for i:= 1; i <= dsInfo.RasterCount; i++ {
+				bandInfo := dsInfo
+				bandInfo.RasterCount := 1
+				bandInfo.NameSpace := fmt.Sprintf("band_%v", i)
 
-		//plan:
-		//1. check dsInfofor raster count > 1
-		//2. split up each raster into separate GeoMetaData and give it a namespace
-		//4. add new ones in
-
-		datasets = append(datasets, dsInfo)
+				datasets.append(datasets, bandInfo)
+			}
+		}
+		
 
 	} else {
 		// There are subdatasets
