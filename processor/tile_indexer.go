@@ -13,7 +13,6 @@ import (
 	"strings"
 	"sync"
 	"time"
-	"strings"
 
 	"github.com/nci/gsky/utils"
 )
