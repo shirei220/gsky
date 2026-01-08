@@ -531,7 +531,7 @@ func (p *TileIndexer) URLIndexGet(ctx context.Context, url string, geoReq *GeoTi
 				if strings.HasPrefix(namespace, "band_") {
 					num, err := strconv.Atoi(strings.TrimPrefix(namespace, "band_"))
 					if err == nil {
-						bandIdx := num
+						bandIdx = num
 					}
 				}
 
