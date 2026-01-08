@@ -281,8 +281,7 @@ func (gi *GeoRasterGRPC) Run(varList []string, verbose bool) {
 	if verbose {
 		log.Printf("tile grpc: %v effective granules", iGran)
 	}
-
-	log.Printf("varList: %v", varList)
+	
 	for _, v := range varList {
 		if _, found := availNamespaces[v]; !found {
 			gi.sendError(fmt.Errorf("band '%v' not found", v))

@@ -279,7 +279,6 @@ func initNoDataSlice(rType string, noDataValue float64, size int) []uint8 {
 }
 
 func ProcessRasterStack(rasterStack map[float64][]*FlexRaster, maskMap map[float64][]bool, canvasMap map[string]*FlexRaster) (map[string]*FlexRaster, error) {
-	defer log.Printf("raster merger: process raster stack done")
 	var keys []float64
 	for k := range rasterStack {
 		keys = append(keys, k)
@@ -301,9 +300,6 @@ func ProcessRasterStack(rasterStack map[float64][]*FlexRaster, maskMap map[float
 			} else {
 				err = MergeMaskedRaster(r, canvasMap, make([]bool, r.Height*r.Width))
 			}
-			//log.Printf("rasterStack[geoStamp]: %+v", rasterStack[geoStamp])
-			//log.Printf("r: %+v", r)
-			//log.Printf("canvasMap[r.NameSpace]: %v", canvasMap[r.NameSpace])
 
 			if err != nil {
 				return canvasMap, err
@@ -495,7 +491,6 @@ func (enc *RasterMerger) Run(bandExpr *utils.BandExpressions, verbose bool) {
 
 			rasterStack[geoStamp] = append(rasterStack[geoStamp], r)
 		}
-		log.Printf("rasterStack: %v", rasterStack)
 		if len(rasterStack) > 0 {
 			tmpMap, err := ProcessRasterStack(rasterStack, maskMap, canvasMap)
 			if err != nil {
@@ -515,7 +510,6 @@ func (enc *RasterMerger) Run(bandExpr *utils.BandExpressions, verbose bool) {
 		nameSpaces = append(nameSpaces, utils.EmptyTileNS)
 	} else {
 		for _, canvas := range canvasMap {
-			log.Printf("configpayload.namespaces: %+v", canvas.ConfigPayLoad.NameSpaces)
 			nameSpaces = canvas.ConfigPayLoad.NameSpaces
 			break
 		}
@@ -567,8 +561,6 @@ func (enc *RasterMerger) Run(bandExpr *utils.BandExpressions, verbose bool) {
 
 	out := make([]utils.Raster, nOut)
 	bandVars := make([]*utils.Float32Raster, len(nameSpaces))
-
-	log.Printf("nameSpaces: %v", nameSpaces)
 
 	for i, ns := range nameSpaces {
 		canvas, found := canvasMap[ns]

@@ -525,9 +525,7 @@ func (p *TileIndexer) URLIndexGet(ctx context.Context, url string, geoReq *GeoTi
 					bandFound = bFound
 				}
 
-				// need to find out which namespace
-				// if namespace == "band_x"
-				// then bandIdx == "x" ?
+				// for s2_sdc images
 				if strings.HasPrefix(namespace, "band_") {
 					num, err := strconv.Atoi(strings.TrimPrefix(namespace, "band_"))
 					if err == nil {
@@ -543,11 +541,10 @@ func (p *TileIndexer) URLIndexGet(ctx context.Context, url string, geoReq *GeoTi
 						gran.Height = 1
 						gran.Width = 1
 					}
-					log.Printf("gran: %+v", gran)
 					granList = append(granList, gran)
 				}
 
-				log.Printf("tile indexer:    %v, %v,%v,%v,%v   %v", axisIdxCnt, bandIdx, aggTimeStamp, bandTimeStamp, namespace, len(ds.TimeStamps))
+				//log.Printf("tile indexer:    %v, %v,%v,%v,%v   %v", axisIdxCnt, bandIdx, aggTimeStamp, bandTimeStamp, namespace, len(ds.TimeStamps))
 
 				ia := len(ds.Axes) - 1
 				axisIdxCnt[ia]++
