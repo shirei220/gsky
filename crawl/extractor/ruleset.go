@@ -71,7 +71,7 @@ const (
 var CollectionRuleSets = []RuleSet{
 	RuleSet{
 		Collection: "sentinel2_sdc",
-		NameSpace:  NSDataset,
+		NameSpace:  NSPath,
 		SRSText:    SRSDetect,
 		Proj4Text:  Proj4Detect,
 		Pattern:    `^(?P<something>[a-z]+)_(?P<tile>[a-z0-9]+)_(?P<year>\d\d\d\d)(?P<month>\d\d)(?P<day>\d\d)_(?P<stagecode>[a-z0-9]+).img`,
