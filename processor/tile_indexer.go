@@ -11,6 +11,7 @@ import (
 	"net/http"
 	"sort"
 	"strings"
+	"strconv"
 	"sync"
 	"time"
 
@@ -528,7 +529,7 @@ func (p *TileIndexer) URLIndexGet(ctx context.Context, url string, geoReq *GeoTi
 				// if namespace == "band_x"
 				// then bandIdx == "x" ?
 				if strings.HasPrefix(namespace, "band_") {
-					bandIdx := int(strings.TrimPrefix(namespace, "band_"))
+					bandIdx := strconv.Atoi(strings.TrimPrefix(namespace, "band_"))
 				}
 
 				if !isEmptyTile || (isEmptyTile && !bandFound) {
