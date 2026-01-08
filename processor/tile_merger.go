@@ -301,8 +301,8 @@ func ProcessRasterStack(rasterStack map[float64][]*FlexRaster, maskMap map[float
 			} else {
 				err = MergeMaskedRaster(r, canvasMap, make([]bool, r.Height*r.Width))
 			}
-			log.Printf("rasterStack[geoStamp]: %+v", rasterStack[geoStamp])
-			log.Printf("r: %+v", r)
+			//log.Printf("rasterStack[geoStamp]: %+v", rasterStack[geoStamp])
+			//log.Printf("r: %+v", r)
 			//log.Printf("canvasMap[r.NameSpace]: %v", canvasMap[r.NameSpace])
 
 			if err != nil {

@@ -101,11 +101,18 @@ func ExtractGDALInfo(path string, concLimit int, approx bool, config *Config) (*
 	var datasets = []*GeoMetaData{}
 	if nsubds == C.int(0) {
 		// There are no subdatasets
+		log.Printf("No subdatasets found")
 		dsInfo, err := getDataSetInfo(path, cPath, shortName, approx, config)
 		if err != nil {
 			LogErr.Printf("%v", err)
 			return &GeoFile{}, fmt.Errorf("%v", err)
 		}
+
+		//plan:
+		//1. check dsInfofor raster count > 1
+		//2. split up each raster into separate GeoMetaData and give it a namespace
+		//4. add new ones in
+
 		datasets = append(datasets, dsInfo)
 
 	} else {

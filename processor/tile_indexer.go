@@ -535,7 +535,7 @@ func (p *TileIndexer) URLIndexGet(ctx context.Context, url string, geoReq *GeoTi
 					granList = append(granList, gran)
 				}
 
-				//log.Printf("    %v, %v,%v,%v,%v   %v", axisIdxCnt, bandIdx, aggTimeStamp, bandTimeStamp, namespace, len(ds.TimeStamps))
+				log.Printf("tile indexer:    %v, %v,%v,%v,%v   %v", axisIdxCnt, bandIdx, aggTimeStamp, bandTimeStamp, namespace, len(ds.TimeStamps))
 
 				ia := len(ds.Axes) - 1
 				axisIdxCnt[ia]++
