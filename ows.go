@@ -654,7 +654,7 @@ func serveWCS(ctx context.Context, params utils.WCSParams, conf *utils.Config, r
 
 	reqURL := r.URL.String()
 
-	Info.Printf("reqUrl: %v", reqUrl)
+	Info.Printf("reqURL: %v", reqURL)
 	Info.Printf("params.Request: %v", params.Request)
 
 	Info.Printf("checkpoint 2")
