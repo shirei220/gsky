@@ -645,10 +645,12 @@ func serveWMS(ctx context.Context, params utils.WMSParams, conf *utils.Config, r
 }
 
 func serveWCS(ctx context.Context, params utils.WCSParams, conf *utils.Config, r *http.Request, w http.ResponseWriter, query map[string][]string, metricsCollector *metrics.MetricsCollector) {
+	Info.Printf("params.Request: %v", params.Request)
 	if params.Request == nil {
 		metricsCollector.Info.HTTPStatus = 400
 		http.Error(w, "Malformed WCS, a Request field needs to be specified", 400)
 	}
+	Info.Printf("params.Request: %v", params.Request)
 
 	Info.Printf("checkpoint 1")
 
