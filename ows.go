@@ -645,9 +645,6 @@ func serveWMS(ctx context.Context, params utils.WMSParams, conf *utils.Config, r
 }
 
 func serveWCS(ctx context.Context, params utils.WCSParams, conf *utils.Config, r *http.Request, w http.ResponseWriter, query map[string][]string, metricsCollector *metrics.MetricsCollector) {
-	log.Printf("serve WCS")
-	Info.Printf("params.Request: %v", params.Request)
-	Info.Printf("params: %+v", params)
 	if params.Request == nil {
 		metricsCollector.Info.HTTPStatus = 400
 		http.Error(w, "Malformed WCS, a Request field needs to be specified", 400)
@@ -703,7 +700,6 @@ func serveWCS(ctx context.Context, params utils.WCSParams, conf *utils.Config, r
 		}
 
 	case "GetCoverage":
-		Info.Printf("checkpoint A")
 		if params.Version == nil || !utils.CheckWCSVersion(*params.Version) {
 			metricsCollector.Info.HTTPStatus = 400
 			http.Error(w, fmt.Sprintf("This server can only accept WCS requests compliant with version 1.0.0: %s", reqURL), 400)
@@ -754,8 +750,6 @@ func serveWCS(ctx context.Context, params utils.WCSParams, conf *utils.Config, r
 			endTime = &eT
 		}
 
-		Info.Printf("checkpoint B")
-
 		styleIdx, err := utils.GetCoverageStyleIndex(params, conf, idx)
 		if err != nil {
 			Error.Printf("%s\n", err)
@@ -779,8 +773,6 @@ func serveWCS(ctx context.Context, params utils.WCSParams, conf *utils.Config, r
 			styleLayer = &conf.Layers[idx].Styles[styleIdx]
 		}
 
-		Info.Printf("checkpoint C")
-
 		if utils.CheckDisableServices(styleLayer, "wcs") {
 			Error.Printf("WCS GetCoverage is disabled for this layer")
 			metricsCollector.Info.HTTPStatus = 400
@@ -797,8 +789,6 @@ func serveWCS(ctx context.Context, params utils.WCSParams, conf *utils.Config, r
 				return
 			}
 		}
-
-		Info.Printf("checkpoint D")
 
 		maxXTileSize := conf.Layers[idx].WcsMaxTileWidth
 		maxYTileSize := conf.Layers[idx].WcsMaxTileHeight
@@ -869,8 +859,6 @@ func serveWCS(ctx context.Context, params utils.WCSParams, conf *utils.Config, r
 			return geoReq
 		}
 
-		Info.Printf("checkpoint E")
-
 		ctx, ctxCancel := context.WithCancel(ctx)
 		defer ctxCancel()
 		errChan := make(chan error, 100)
@@ -916,8 +904,6 @@ func serveWCS(ctx context.Context, params utils.WCSParams, conf *utils.Config, r
 			}
 
 		}
-
-		Info.Printf("checkpoint F")
 
 		if *params.Height > conf.Layers[idx].WcsMaxHeight || *params.Width > conf.Layers[idx].WcsMaxWidth {
 			metricsCollector.Info.HTTPStatus = 400
@@ -1032,8 +1018,6 @@ func serveWCS(ctx context.Context, params utils.WCSParams, conf *utils.Config, r
 
 			workerTileRequests = append(workerTileRequests, tmpTileRequests)
 		}
-
-		Info.Printf("checkpoint G")
 
 		hDstDS := utils.GetDummyGDALDatasetH()
 		var masterTempFile string
@@ -1688,9 +1672,7 @@ func generalHandler(conf *utils.Config, w http.ResponseWriter, r *http.Request) 
 		}
 		serveWMS(ctx, params, conf, r, w, metricsCollector)
 	case "WCS":
-		log.Printf("general handler WCS")
 		params, err := utils.WCSParamsChecker(query, reWCSMap)
-		log.Printf("params: %+v", params)
 		if err != nil {
 			metricsCollector.Info.HTTPStatus = 400
 			http.Error(w, fmt.Sprintf("Wrong WCS parameters on URL: %s", err), 400)
