@@ -645,21 +645,16 @@ func serveWMS(ctx context.Context, params utils.WMSParams, conf *utils.Config, r
 }
 
 func serveWCS(ctx context.Context, params utils.WCSParams, conf *utils.Config, r *http.Request, w http.ResponseWriter, query map[string][]string, metricsCollector *metrics.MetricsCollector) {
+	log.Printf("serve WCS")
 	Info.Printf("params.Request: %v", params.Request)
+	Info.Printf("params: %+v", params)
 	if params.Request == nil {
 		metricsCollector.Info.HTTPStatus = 400
 		http.Error(w, "Malformed WCS, a Request field needs to be specified", 400)
+		return
 	}
-	Info.Printf("params.Request: %v", params.Request)
-
-	Info.Printf("checkpoint 1")
 
 	reqURL := r.URL.String()
-
-	Info.Printf("reqURL: %v", reqURL)
-	Info.Printf("params.Request: %v", params.Request)
-
-	Info.Printf("checkpoint 2")
 
 	switch *params.Request {
 	case "GetCapabilities":
@@ -1693,7 +1688,9 @@ func generalHandler(conf *utils.Config, w http.ResponseWriter, r *http.Request) 
 		}
 		serveWMS(ctx, params, conf, r, w, metricsCollector)
 	case "WCS":
+		log.Printf("general handler WCS")
 		params, err := utils.WCSParamsChecker(query, reWCSMap)
+		log.Printf("params: %+v": params)
 		if err != nil {
 			metricsCollector.Info.HTTPStatus = 400
 			http.Error(w, fmt.Sprintf("Wrong WCS parameters on URL: %s", err), 400)
