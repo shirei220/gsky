@@ -1690,7 +1690,7 @@ func generalHandler(conf *utils.Config, w http.ResponseWriter, r *http.Request) 
 	case "WCS":
 		log.Printf("general handler WCS")
 		params, err := utils.WCSParamsChecker(query, reWCSMap)
-		log.Printf("params: %+v": params)
+		log.Printf("params: %+v:" params)
 		if err != nil {
 			metricsCollector.Info.HTTPStatus = 400
 			http.Error(w, fmt.Sprintf("Wrong WCS parameters on URL: %s", err), 400)
