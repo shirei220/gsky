@@ -748,7 +748,7 @@ func serveWCS(ctx context.Context, params utils.WCSParams, conf *utils.Config, r
 			eT := params.Time.Add(step)
 			endTime = &eT
 		}
-		log.Printf("checkpoint A")
+
 		styleIdx, err := utils.GetCoverageStyleIndex(params, conf, idx)
 		if err != nil {
 			Error.Printf("%s\n", err)
@@ -766,7 +766,7 @@ func serveWCS(ctx context.Context, params utils.WCSParams, conf *utils.Config, r
 				styleIdx = 0
 			}
 		}
-		
+
 		styleLayer := &conf.Layers[idx]
 		if styleIdx >= 0 {
 			styleLayer = &conf.Layers[idx].Styles[styleIdx]
@@ -778,7 +778,7 @@ func serveWCS(ctx context.Context, params utils.WCSParams, conf *utils.Config, r
 			http.Error(w, "WCS GetCoverage is disabled for this layer", 400)
 			return
 		}
-		log.Printf("checkpoint B")
+
 		if params.BandExpr != nil {
 			err := utils.CheckBandExpressionsComplexity(params.BandExpr, conf.Layers[idx].WcsBandExpressionCriteria)
 			if err != nil {
@@ -857,7 +857,7 @@ func serveWCS(ctx context.Context, params utils.WCSParams, conf *utils.Config, r
 
 			return geoReq
 		}
-		log.Printf("checkpoint C")
+
 		ctx, ctxCancel := context.WithCancel(ctx)
 		defer ctxCancel()
 		errChan := make(chan error, 100)
@@ -909,7 +909,7 @@ func serveWCS(ctx context.Context, params utils.WCSParams, conf *utils.Config, r
 			http.Error(w, fmt.Sprintf("Requested width/height is too large, max width:%d, height:%d", conf.Layers[idx].WcsMaxWidth, conf.Layers[idx].WcsMaxHeight), 400)
 			return
 		}
-		log.Printf("checkpoint D")
+
 		if !isWorker {
 			if *params.Width > maxXTileSize || *params.Height > maxYTileSize {
 				tmpTileRequests := []*proc.GeoTileRequest{}
@@ -1017,7 +1017,7 @@ func serveWCS(ctx context.Context, params utils.WCSParams, conf *utils.Config, r
 
 			workerTileRequests = append(workerTileRequests, tmpTileRequests)
 		}
-		log.Printf("checkpoint E")
+
 		hDstDS := utils.GetDummyGDALDatasetH()
 		var masterTempFile string
 
@@ -1092,7 +1092,7 @@ func serveWCS(ctx context.Context, params utils.WCSParams, conf *utils.Config, r
 				}(req, trans, tempFileHandle.Name())
 			}
 		}
-		log.Printf("checkpoint F")
+
 		geot := utils.BBox2Geot(*params.Width, *params.Height, params.BBox)
 
 		driverFormat := *params.Format
@@ -1187,7 +1187,7 @@ func serveWCS(ctx context.Context, params utils.WCSParams, conf *utils.Config, r
 				runtime.GC()
 			}
 		}
-		log.Printf("checkpoint G")
+
 		if !isWorker && len(workerTileRequests) > 1 {
 			nWorkerDone := 0
 			allWorkerDone := false
@@ -1245,7 +1245,7 @@ func serveWCS(ctx context.Context, params utils.WCSParams, conf *utils.Config, r
 				}
 			}
 		}
-		log.Printf("checkpoint H")
+
 		utils.EncodeGdalClose(&hDstDS)
 		hDstDS = nil
 
