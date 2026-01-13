@@ -317,8 +317,6 @@ func (p *TileIndexer) URLIndexGet(ctx context.Context, url string, geoReq *GeoTi
 		defer cLimiter.Decrease()
 	}
 
-	log.Printf("url: %v", url)
-
 	resp, err := http.Get(url)
 	if err != nil {
 		p.sendError(fmt.Errorf("GET request to %s failed. Error: %v", url, err))
