@@ -650,6 +650,8 @@ func serveWCS(ctx context.Context, params utils.WCSParams, conf *utils.Config, r
 		http.Error(w, "Malformed WCS, a Request field needs to be specified", 400)
 	}
 
+	Info.Printf("checkpoint A")
+
 	reqURL := r.URL.String()
 
 	switch *params.Request {
