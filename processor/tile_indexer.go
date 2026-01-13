@@ -317,6 +317,8 @@ func (p *TileIndexer) URLIndexGet(ctx context.Context, url string, geoReq *GeoTi
 		defer cLimiter.Decrease()
 	}
 
+	log.Printf("url: %v", url)
+
 	resp, err := http.Get(url)
 	if err != nil {
 		p.sendError(fmt.Errorf("GET request to %s failed. Error: %v", url, err))
@@ -352,6 +354,7 @@ func (p *TileIndexer) URLIndexGet(ctx context.Context, url string, geoReq *GeoTi
 	switch len(metadata.GDALDatasets) {
 	case 0:
 		if len(metadata.Error) > 0 {
+			log.Printf("metadata error")
 			log.Printf("Indexer returned error: %v", string(body))
 		}
 		out <- &GeoTileGranule{ConfigPayLoad: ConfigPayLoad{NameSpaces: []string{utils.EmptyTileNS}, ScaleParams: geoReq.ScaleParams, Palette: geoReq.Palette}, Path: "NULL", NameSpace: utils.EmptyTileNS, RasterType: "Byte", TimeStamp: 0, BBox: geoReq.BBox, Height: geoReq.Height, Width: geoReq.Width, OffX: geoReq.OffX, OffY: geoReq.OffY, CRS: geoReq.CRS}
