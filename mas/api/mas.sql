@@ -234,6 +234,8 @@ create or replace function mas_intersects(
 
   begin
 
+    RAISE NOTICE 'args: % % % % % % % % % % %', gpath,srs,wkt,n_seg,time_a,time_b,namespace,raw_metadata,identity_tol,dp_tol,limit_val;
+
     if gpath is null then
       raise exception 'invalid search path';
     end if;

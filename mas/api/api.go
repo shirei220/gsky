@@ -62,10 +62,7 @@ func handler(response http.ResponseWriter, request *http.Request) {
 		// missing parameters into proper null arguments.
 		// The string_to_array() call will return null in the case of a null
 		// argument, rather than array[] or array[null].
-
-		//debug prints
-		log.Printf("query: %v %v %v %v %v %v %v %v %v %v %v", request.URL.Path, request.FormValue("srs"), request.FormValue("wkt"), request.FormValue("nseg"),request.FormValue("time"),request.FormValue("until"),request.FormValue("namespace"),request.FormValue("metadata"),request.FormValue("identitytol"),request.FormValue("dptol"),request.FormValue("limit"))
-
+		
 		err = db.QueryRow(
 			`select mas_intersects(
 				nullif($1,'')::text,
